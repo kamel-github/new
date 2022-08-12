@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <data noupdate="0">
+<!--        &lt;!&ndash; boy Landing Page....... &ndash;&gt;-->
+<!--        <template id="boy_link_in_header" inherit_id="website.submenu">-->
+<!--            <xpath expr="//li[@t-if='submenu.is_visible and not (submenu.child_id or submenu.is_mega_menu)']" position="before">-->
+<!--                <t t-set="hide_mp_sell_menu" t-value="submenu.url == '/boydelivery/signup' and not website.mp_show_sell_menu_header"/>-->
+<!--            </xpath>-->
+<!--        </template>-->
+
+        <template id="wk_mp_boy_landing_page" name="Boy Delivery Landing Page">
+        	<t t-call="web.login_layout">
+				<form class="oe_signup_form" action="/boydelivery/signup" id="wk_mp" role="form" method="post">
+					<div class="text-center seller-register">Register as a Boy Delivery</div>
+					<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+					<t t-call="auth_signup.fields">
+						<t t-set="only_passwords" t-value="bool(token)"/>
+					</t>
+                    <input type="checkbox" style="display:none;" name="is_delivery_boy" id="is_delivery_boy" checked="checked" />
+                    <div id="mp_boy_delivery_details">
+                        <div class="form-group field-country">
+                            <t t-set="countries" t-value="website.get_mp_ajax_seller_countries()"/>
+
+                            <t t-set="country" t-value="website.user_id.sudo().partner_id.company_id.country_id"/>
+                            <label class="control-label" for="country_id">Country</label>
+                            <select id="country_id" name="country_id" class="form-control" t-att-required="'disabled' if set_seller or signup_from_seller_page else None">
+                                <option value="">Country...</option>
+                                <t t-foreach="countries" t-as="c">
+                                    <option t-att-value="c.id" t-att-selected="c.id == (country and country.id or -1)">
+										<t t-set="selected_c" t-value="c.id"/>
+                                        <t t-esc="c.name" />
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+
+						<div class="form-group field-state">
+                            <t t-set="states" t-value="website.get_mp_ajax_boy_countries_state()"/>
+
+                            <t t-set="country" t-value="website.user_id.sudo().partner_id.company_id.country_id"/>
+                            <label class="control-label" for="country_id">State</label>
+                            <select id="state_id" name="state_id" class="form-control" t-att-required="'disabled' if set_seller or signup_from_seller_page else None">
+                                <option value="">States...</option>
+                                <t t-foreach="states" t-as="s">
+                                    <option t-att-value="s.id" t-att-selected="s.country_id.id == (country and country.id or -1)">
+                                        <t t-esc="s.name" />
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+
+
+						<div class="form-group ">
+							 <label class="control-label" for="mp_description">Description</label>
+<!--							<input class="form-control"  type="textarea" name="mp_description" id="mp_description" />-->
+							<textarea class="form-control"  name="mp_description" id="mp_description" />
+
+<!--                            <data id="mp_t_and_c_data" t-att-data-terms="website.mp_term_and_condition"/>-->
+						</div>
+
+                        <t t-if="True">
+                            <input type="checkbox" name="mp_terms_conditions" id="mp_terms_conditions"  required="1" />
+            				<label for="mp_terms_conditions" class="form-group control-label">&#160;I Accept <a href="#" id="mp_t_and_c">Terms &amp; Conditions</a></label>
+<!--                            <data id="mp_t_and_c_data" t-att-data-terms="website.mp_term_and_condition"/>-->
+                        </t>
+
+
+                    </div>
+					<p class="alert alert-danger" t-if="error">
+						<t t-esc="error"/>
+					</p>
+					<input type="hidden" name="signup_from_seller_page" value="false"/>
+					<input type="hidden" name="redirect" t-att-value="redirect"/>
+					<input type="hidden" name="token" t-att-value="token"/>
+					<div class="clearfix oe_login_buttons">
+						<a t-attf-href="/web/login?{{ keep_query() }}" class="btn btn-link pull-right">Back to Login</a>
+						<button type="submit" class="btn btn-primary pull-left" >Sign up</button>
+					</div>
+
+				</form>
+			</t>
+		</template>
+
+
+		<template id="wk_mp_thanks_page" name="Thanks page">
+			<t t-call="web.login_layout">
+				<div class="text-center seller-register">
+					Thanks for registration we will call you Soon
+				</div>
+			</t>
+		</template>
+
+
+    <template id="header_footer_custom3" inherit_id="odoo_marketplace.header_footer_custom2" name="Footer boy delivery Link" priority="15">
+			<xpath expr="//div[@id='footer']//ul" position="inside">
+				<t>
+						<li>
+							<a href="/boydelivery/list" target="_blank">delivery boy List</a>
+						</li>
+					</t>
+			</xpath>
+		</template>
+    </data>
+</odoo>

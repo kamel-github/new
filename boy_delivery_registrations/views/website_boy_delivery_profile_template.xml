@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+
+<odoo>
+	<data noupdate="0">
+
+        	<!--Boy Delivery-->
+
+	<template id="mp_boy_profile" name="Boy delivery Profile">
+			<t t-call="website.layout">
+				<div class="oe_structure"/>
+				<div id="wrap">
+
+					<div class="carousel-inner-parent">
+						<div class="carousel-inner">
+							<t t-set="boy_profile_banner" t-value="boy.sudo().profile_banner"/>
+							<t t-if="boy_profile_banner">
+								<div class="carousel-item oe_img_bg oe_custom_bg active" t-attf-style="background-image: url('/web/image/res.partner/#{boy.id}/profile_banner');width: 100%;height: 320px;background-size:100% 320px;"></div>
+							</t>
+							<t t-if="not boy_profile_banner">
+								<div class="carousel-item oe_img_bg oe_custom_bg active" t-attf-style="background-image: url('/odoo_marketplace/static/src/img/banner_img1.jpg');width: 100%;height: 320px; background-size:100% 320px;"></div>
+							</t>
+						</div>
+					</div>
+
+										<div class='container'>
+						<div class="col-md-12 mp_seller_desc" id="" style="border:1px solid #e3e3e3;padding-top:15px;padding-bottom:15px;">
+							<div class="row">
+								<div class="col-sm-3 hidden-xs hidden-sm mp_boy_desc_profile">
+									<t t-set="boy_profile_img" t-value="boy.sudo().image_1920"/>
+									<t t-if="boy_profile_img">
+										<div class="item oe_img_bg oe_custom_bg seller-profile-pic" t-attf-style="background-image: url('/web/image/res.partner/#{boy.id}/image_1920');background-size:180px;"></div>
+									</t>
+							<t t-if="not boy_profile_img">
+								<div class="item oe_img_bg oe_custom_bg seller-profile-pic" t-attf-style="background-image: url('/odoo_marketplace/static/src/img/boy_profile_img.jpg');background-size:180px;"></div>
+							</t>
+								</div>
+								<div class="col-md-4" id="boy_name_and_rating">
+									<div class="row ml0 mr0 d-none d-md-block">
+										<span style="font-size:20px;" title="Boy delivery Name">
+											<b><t t-esc="boy.name"/></b>
+										</span>
+										<t t-set="boy_add_state" t-value="boy.state_id"/>
+										<t t-set="boy_add_country" t-value="boy.country_id"/>
+										<t t-if="boy_add_state and boy_add_country">
+											<div class="fa fa-map-marker" style="color:#656565;margin-left:15px;margin-top: 10px;" title="Boy delivery Address">
+												<span><t t-esc="boy_add_state.name"/>,
+													<t t-esc="boy_add_country.name"/></span>
+											</div>
+										</t>
+									</div>
+                                    <div class="row ml0 mr0 d-block d-md-none d-lg-none" style="position: relative;margin-top: 35%;">
+                                        <span style="font-size:20px;" title="Seller Name">
+											<b><t t-esc="boy.name"/></b>
+										</span>
+										<t t-set="boy_add_state" t-value="boy.state_id"/>
+										<t t-set="boy_add_country" t-value="boy.country_id"/>
+										<t t-if="boy_add_state and boy_add_country">
+												<div class="fa fa-map-marker" style="color:#656565;margin-left:15px;margin-top: 10px;" title="Boy delivery Address">
+												<span><t t-esc="boy_add_state.name"/>,
+													<t t-esc="boy_add_country.name"/></span>
+											</div>
+										</t>
+                                    </div>
+									<div class="row ml0 mr0">
+										<t t-if="True">
+											<a href="" id="open-review-tab">
+												<span class="" style="display:inline-flex;">
+													<input
+														id="star-readonly"
+														class="rating form-control d-none"
+														t-attf-value="#{avg_val}"
+														data-show-clear="false"
+														data-show-caption="false"
+														data-min="0"
+														data-max="5"
+														data-step="0.1"
+														data-readonly="true"
+														data-size="xs"
+														data-symbol="&#xf005;"
+														data-glyphicon="false"
+														data-rating-class="rating-fa"/>
+													<span style="padding: 7px;">
+
+													</span>
+												</span>
+											</a>
+										</t>
+									</div>
+								</div>
+								<div class="col-md-5" id="vacant_div"/>
+							</div>
+							<div class="row" style="margin-top: 30px">
+								<div class="col-md-12" style="color:#656565;">
+<!--									<span class="mp_wrap_content" t-raw="seller.profile_msg"/>-->
+								</div>
+							</div>
+<!--							<t t-set="mp_seller_shop_id" t-value="seller.sudo().seller_shop_id"/>-->
+							<div class="row" style="margin-top: 5px;margin-bottom: 5px;">
+								<t t-if="website.mp_product_count">
+									<div class="col-xs-2 ml-3">
+										<span class="badge badge-pill badge-secondary fa fa-truck" aria-label="badge" style="padding:5px 10px;">
+											<![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;]]><t t-esc="boy._compute_delivery_boy_pickings_assigned1()"/>
+											<![CDATA[&nbsp;]]>Deliveries
+										</span>
+									</div>
+								</t>
+
+							</div>
+							<div class="row" style="margin-top: 5px;margin-bottom: 5px;">
+								<t t-if="True">
+									<div class="col-md-4">
+										<i>
+											Boy delivery from
+											<span style="">
+												<b><span t-field="boy.create_date" t-options='{"format": "d MMMM y"}'/></b>
+												to till now</span>
+										</i>
+									</div>
+								</t>
+							</div>
+							<div class="row">
+								<div class="col-12 col-md-5 col-lg-4 pt-1">
+									<div t-if="website.mp_seller_contact_btn" style="display:inline;">
+										<a t-if="not request.website.is_public_user()" t-attf-href="mailto:{{ boy.email }}" class="btn btn-primary">Contact Boy delivery</a>
+
+										<button t-else="" type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginfeed">
+											Contact boy delivery
+										</button>
+
+									</div>
+
+								</div>
+
+								<div class="col-8 col-md-4 col-lg-3 pt-1">
+									<a class="pull-right" target="_blank" href="/contactus" style="text-decoration: underline;">Contact Us about
+										<t t-esc="boy.name"/>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix mt16" id="boydelivery-pannel"/>
+					<div class="oe_structure"/>
+		            <div class='container mb16'>
+						<div class="card with-mp-nav-tabs tabbable" id="boy-info-pannel">
+							<div class="card-header" style="padding: 0.5rem;padding-bottom: 0;border-bottom: 0;">
+								<ul class="nav nav-tabs" id="shop-nav-tabs">
+									<t t-if= "True">
+										<li class="nav-item">
+											<a href="" class="nav-link" data-toggle="tab">
+												Rating &amp; Reviews
+											</a>
+										</li>
+									</t>
+
+									<t t-if="website.mp_shipping_address">
+										<li class="nav-item">
+											<a href="#contact_us_tab" class="nav-link" data-toggle="tab">
+												Boy delivery Contact
+											</a>
+										</li>
+									</t>
+								</ul>
+							</div>
+							<div class="card-body">
+								<div class="tab-content" id="shop-tab-content">
+
+									<div class="tab-pane" id="contact_us_tab">
+										<ul class="list-unstyled">
+											<li t-ignore="true">
+												<i title="Phone" class="fa fa-phone"></i>
+												<label>Phone :
+												</label>
+												<span t-field="boy.phone"></span>
+											</li>
+											<li t-ignore="true">
+												<i title="Mobile" class="fa fa-mobile" style="font-size: 18px;margin-left: 3px;margin-right: 3px;"></i>
+												<label>Mobile :
+												</label>
+												<span t-field="boy.mobile"></span>
+
+											</li>
+											<li t-ignore="true">
+												<i title="Email" class="fa fa-envelope"></i>
+												<label>Email :
+												</label>
+												<span t-field="boy.email"></span>
+											</li>
+										</ul>
+										<t t-if="boy_add_country">
+											<iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" t-attf-src="https://maps.google.com/maps?q=#{boy_add_state.name},#{boy_add_country.name}&amp;output=embed"></iframe>
+										</t>
+									</div>
+								</div>
+							</div>
+						</div>
+		      </div>
+
+		</t>
+
+		</template>
+
+
+		    <!-- Boy item -->
+	<template id="Boy_list_item" name="Boy List Item">
+			<div itemscope="itemscope">
+				<div class="wk_ribbon-wrapper">
+					<div class="wk_ribbon badge badge-danger p-1">Best Boy delivery</div>
+				</div>
+				<div class="row col-xs-12 ml0 mr0" style="padding:10px;">
+					<div class="col-xs-5" style="padding:0px">
+						<div style="">
+							<a itemprop="url"  t-attf-href="/boy/profile/#{boy_obj.sudo().url_handler if boy_obj.sudo().url_handler else boy_obj.sudo().id}">
+    							<span
+    								itemprop="image"
+    								t-field="boy_obj.sudo().image_1920"
+    								t-options="{'widget': 'image', 'style':'height: 100px;width: 100px;border: 5px solid;border-radius: 4px;border-color: rgb(73, 73, 73);', 'zoom': 'image', 'class':''}"
+    								t-att-alt="boy_obj.sudo().name"/>
+							</a>
+						</div>
+					</div>
+					<div class="col-xs-7" style="padding: 0px 5px 0px 5px;">
+						<div class="" style="padding-right: 0px;" id="boy_name">
+							<strong>
+
+								<a itemprop="name" class="grid-boy-name"  t-field="boy_obj.sudo().name"/>
+							</strong>
+						</div>
+
+						<div id="boy_other_info"></div>
+					</div>
+				</div>
+
+
+				<div class="col-xs-12">
+					<a class="pull-right view-profile" itemprop="name" t-attf-href="/boy/profile/#{boy_obj.sudo().url_handler if boy_obj.sudo().url_handler else boy_obj.sudo().id}">
+						<u>View Profile</u>
+					</a>
+				</div>
+			</div>
+		</template>
+
+
+		    <!-- /boys/list sellers listing 22-->
+	<template id="boys_list" name="Boy delivery List">
+			<t t-call="website.layout">
+				<t t-set="additional_title">Boy Delivery</t>
+				<div id="wrap" class="js_sale">
+					<div class="oe_structure"/>
+					<t t-if="not bins">
+						<div class="container">
+							<div class="text-center text-muted mt64 mb16">
+								<img src="/boy_delivery_registrations/static/src/img/Slice-Seller-Listing.png" alt="There is not any boy delivery yet to display!"/>
+								<h3 class="css_editable_display mt64" style="font-weight: 600;color: #969696;">There is not any boy delivery yet to display!</h3>
+							</div>
+						</div>
+					</t>
+					<div t-if="bins" class="container">
+						<br/>
+						<br/>
+						<div class="row col-md-12 ml0 mr0" style="padding:0px;">
+							<div class="col-md-6" style="padding:0px">
+								<div class="row">
+									<div class="col-md-5 all-seller-label">All boy delivery</div>
+									<div class="col-md-7 col-sm-12 mt16 mb8" style="display:table-row;">
+										<span class="all-seller-count" style="border: 1px solid;padding: 2px 6px 2px 6px;border-radius: 2px;">
+											<t t-esc="total_active_boy">Boy delivery</t>
+											Boy delivery</span>
+										<span class="all-seller-avl">
+											are currently Active on the Store.</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3"></div>
+							<div class="col-md-3" style="padding:0px">
+								<form t-att-action="keep('/boydelivery/list/', search=0)" method="get" t-att-class="search_class">
+									<t t-call="website.website_search_box"/>
+								</form>
+							</div>
+						</div>
+						<br/>
+
+						<div class="row o_wsale_products_main_row">
+							<div class="hidden" id="seller_grid_before"></div>
+							<div class="col" id="sellers_grid">
+								<div t-if="bins" class="o_wsale_products_grid_table_wrapper">
+									<table class="table table-borderless m-0" t-att-data-ppg="ppg" t-att-data-ppr="ppr"
+										id="seller_table" style="table-layout:fixed;">
+	                                    <colgroup t-ignore="true">
+	                                        <col t-foreach="ppr" t-as="p"/>
+	                                    </colgroup>
+										<tbody>
+											<tr t-foreach="bins" t-as="tr_sellers">
+												<t t-foreach="tr_sellers" t-as="td_seller">
+													<t t-if="td_seller">
+														<t t-set="boy_obj" t-value="td_seller['product']"/>
+														<td
+															t-att-seller_id="boy_obj.id"
+															t-att-colspan="td_seller['x'] != 1 and td_seller['x']"
+															t-att-rowspan="td_seller['y'] != 1 and td_seller['y']"
+															class="mp_seller oe_product"
+															style="vertical-align: top;border:1px solid rgba(0, 0, 0, 0.125)">
+															<div t-attf-class="o_wsale_product_grid_wrapper o_wsale_product_grid_wrapper_#{td_seller['x']}_#{td_seller['y']}">
+																<t t-call="boy_delivery_registrations.Boy_list_item">
+																	<t t-set="product_image_big" t-value="td_seller['x'] + td_seller['y'] &gt; 2"/>
+																</t>
+															</div>
+														</td>
+													</t>
+													<td t-else="" class="oe-height-2"/>
+												</t>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<t t-else="">
+								   <div class="text-center text-muted">
+										<h3 class="mt8">No boy delivery defined.</h3>
+								   </div>
+							   </t>
+							</div>
+						</div>
+						<div class="products_pager">
+							<t t-call="website.pager"/>
+						</div>
+					</div>
+					<div class="oe_structure mb32"/>
+				</div>
+
+			</t>
+		</template>
+
+
+	<template id="boy_item_list_custome_view3" inherit_id="boy_delivery_registrations.Boy_list_item" active="True"  name="Boy delivery">
+			<xpath expr="//div[@id='boy_other_info']" position="inside">
+				<div class="" style="padding-right: 0px;">
+					<t t-set="boy_add_state" t-value="boy_obj.state_id"/>
+					<t t-set="boy_add_country" t-value="boy_obj.country_id"/>
+					<t t-if="boy_add_state and boy_add_country">
+						<div class="fa fa-map-marker" title="Boy Address">
+							<span class="grid-boy-detail"><t t-esc="boy_add_state.name"/>,
+								<t t-esc="boy_add_country.name"/></span>
+						</div>
+					</t>
+				</div>
+
+				<div class="" style="padding-right: 0px;">
+					<t>
+						<div class="fa fa-truck" style="margin-right:5px;font-size:12px;padding-top:5px;">
+							<span class="grid-boy-detail"><t t-esc="boy_obj._compute_delivery_boy_pickings_assigned1()"/>
+								Deliveries</span>
+
+						</div>
+					</t>
+				</div>
+
+
+			</xpath>
+		</template>
+
+
+    </data>
+</odoo>

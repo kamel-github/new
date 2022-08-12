@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_boy_delivery_registrations_boy_delivery_registrations,boy_delivery_registrations.boy_delivery_registrations,model_boy_delivery_registrations_boy_delivery_registrations,base.group_user,1,1,1,1
